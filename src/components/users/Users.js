@@ -32,7 +32,7 @@ export class Users extends Component {
     // };
     render() {
         return (
-            <div style={userStyle}>
+            <div style={userStyle} className='grid-3'>
                 {this.props.users.map(user => (
                     <UserItem key={user.id} user={user} />
                 ))}
@@ -42,9 +42,7 @@ export class Users extends Component {
 }
 
 const userStyle = {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(3,1fr)',
-    gridGap: '1rem'
+    gridGap: '0.2rem'
 }
 
 export default Users
