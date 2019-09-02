@@ -1,7 +1,5 @@
 import React from 'react';
 
-
-
 //can be refractor(props) -> ({user: {login, avatar_url, html_url}})
 const UserItem = (props) => {
     const { login, avatar_url, html_url } = props.user;

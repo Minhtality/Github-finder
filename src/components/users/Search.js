@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 
 export class Search extends Component {
     // state for text value 
@@ -15,7 +16,8 @@ export class Search extends Component {
     //onSubmit
     onSubmit = (event) => {
         event.preventDefault();
-        console.log(this.state.text);
+        this.props.searchUsers(this.state.text);
+        this.setState({ text: '' });
     }
     render() {
         return (
@@ -26,9 +28,14 @@ export class Search extends Component {
                     {/* <input type="text" name="email" placeholder="Search Email" value={this.state.email} onChange={this.onChange} /> */}
                     <input type="submit" className="btn btn-dark btn-block" value="Search!" />
                 </form>
+                <input type="submit" className="btn btn-light btn-block" value="Clear" onClick={this.props.clearUsers} />
             </div>
         )
     }
 }
 
+Search.propTypes = {
+    searchUsers: PropTypes.func.isRequired,
+    clearUsers: PropTypes.bool.isRequired
+};
 export default Search
