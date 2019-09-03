@@ -28,7 +28,10 @@ export class Search extends Component {
                     {/* <input type="text" name="email" placeholder="Search Email" value={this.state.email} onChange={this.onChange} /> */}
                     <input type="submit" className="btn btn-dark btn-block" value="Search!" />
                 </form>
-                <input type="submit" className="btn btn-light btn-block" value="Clear" onClick={this.props.clearUsers} />
+                {this.props.showClear &&
+                    <button className="btn btn-light btn-block" onClick={this.props.clearUsers}>Clear!</button>
+                }
+
             </div>
         )
     }
@@ -36,6 +39,7 @@ export class Search extends Component {
 
 Search.propTypes = {
     searchUsers: PropTypes.func.isRequired,
-    clearUsers: PropTypes.bool.isRequired
+    clearUsers: PropTypes.func.isRequired,
+    showClear: PropTypes.bool.isRequired
 };
 export default Search
