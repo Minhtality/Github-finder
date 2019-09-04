@@ -12,12 +12,17 @@ export class Search extends Component {
     onChange = (event) => {
         // event.target.name -> use when you want to target multiple form inputs
         this.setState({ [event.target.name]: event.target.value })
+
     }
     //onSubmit
     onSubmit = (event) => {
         event.preventDefault();
-        this.props.searchUsers(this.state.text);
-        this.setState({ text: '' });
+        if (this.state.text === '') {
+            this.props.triggerAlert('Search field cannot be empty', 'light');
+        } else {
+            this.props.searchUsers(this.state.text);
+            this.setState({ text: '' });
+        }
     }
     render() {
         return (
@@ -40,6 +45,7 @@ export class Search extends Component {
 Search.propTypes = {
     searchUsers: PropTypes.func.isRequired,
     clearUsers: PropTypes.func.isRequired,
-    showClear: PropTypes.bool.isRequired
+    showClear: PropTypes.bool.isRequired,
+    triggerAlert: PropTypes.func.isRequired,
 };
 export default Search
