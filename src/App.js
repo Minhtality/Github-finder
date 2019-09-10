@@ -12,22 +12,11 @@ import axios from 'axios';
 import './App.css';
 
 const App = () => {
-  const [user, setUser] = useState({});
-  const [users, setUsers] = useState([]);
+
   const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
-  //first load api request
-  useEffect(() => {
-    setLoading(true);
-    const fetchData = async () => {
-      const res = await axios.get(`https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
-      setUsers(res.data);
-    };
-    fetchData();
-    setLoading(false);
-    //eslint-disable-next-line
-  }, []);
+
 
   // repo api request
   const getRepos = async (username) => {
@@ -37,15 +26,6 @@ const App = () => {
     setLoading(false);
   }
 
-  //Get single user method
-  const getUser = async (username) => {
-    setLoading(true);
-    const res = await axios.get(`https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
-    setUser(res.data);
-    setLoading(false);
-  }
-  //clear users from state
-  const clearUsers = () => { setUsers([]); setLoading(false); setAlert(null); }
 
 
   //alert user 
@@ -65,13 +45,13 @@ const App = () => {
             <Switch>
               <Route exact path='/' render={props => (
                 <Fragment>
-                  <Search clearUsers={clearUsers} showClear={users.length > 0 ? true : false} triggerAlert={triggerAlert} />
-                  <Users loading={loading} users={users} />
+                  <Search triggerAlert={triggerAlert} />
+                  <Users />
                 </Fragment>
               )} />
               <Route exact path="/about" component={About} />
               <Route exact path="/user/:login" render={props => (
-                <User {...props} getUser={getUser} getRepos={getRepos} user={user} loading={loading} repos={repos} />
+                <User {...props} getRepos={getRepos} setLoading={setLoading} repos={repos} />
               )} />
             </Switch>
           </div>

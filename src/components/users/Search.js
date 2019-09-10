@@ -21,7 +21,7 @@ const Search = ({ clearUsers, showClear, triggerAlert }) => {
         if (text === '') {
             triggerAlert('Search field cannot be empty', 'light');
         } else {
-            githubContext.searchUsers();
+            githubContext.searchUsers(text);
             setText('');
         }
     }
@@ -33,8 +33,8 @@ const Search = ({ clearUsers, showClear, triggerAlert }) => {
                 {/* <input type="text" name="email" placeholder="Search Email" value={this.state.email} onChange={this.onChange} /> */}
                 <input type="submit" className="btn btn-dark btn-block" value="Search!" />
             </form>
-            {showClear &&
-                <button className="btn btn-light btn-block" onClick={clearUsers}>Clear!</button>
+            {githubContext.users.length > 0 &&
+                <button className="btn btn-light btn-block" onClick={githubContext.clearUsers}>Clear!</button>
             }
 
         </div>
@@ -43,8 +43,6 @@ const Search = ({ clearUsers, showClear, triggerAlert }) => {
 }
 
 Search.propTypes = {
-    clearUsers: PropTypes.func.isRequired,
-    showClear: PropTypes.bool.isRequired,
     triggerAlert: PropTypes.func.isRequired,
 };
 export default Search
