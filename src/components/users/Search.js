@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
+import GithubContext from '../context/github/GithubContext';
 
-const Search = ({ clearUsers, showClear, triggerAlert, searchUsers }) => {
+const Search = ({ clearUsers, showClear, triggerAlert }) => {
+    //initiate github context 
+    const githubContext = useContext(GithubContext)
+
     //set state for text value 
     const [text, setText] = useState('');
 
@@ -17,7 +21,7 @@ const Search = ({ clearUsers, showClear, triggerAlert, searchUsers }) => {
         if (text === '') {
             triggerAlert('Search field cannot be empty', 'light');
         } else {
-            searchUsers(text);
+            githubContext.searchUsers();
             setText('');
         }
     }
@@ -39,7 +43,6 @@ const Search = ({ clearUsers, showClear, triggerAlert, searchUsers }) => {
 }
 
 Search.propTypes = {
-    searchUsers: PropTypes.func.isRequired,
     clearUsers: PropTypes.func.isRequired,
     showClear: PropTypes.bool.isRequired,
     triggerAlert: PropTypes.func.isRequired,
