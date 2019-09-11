@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer } from 'react';
 import axios from 'axios';
 import GithubContext from './GithubContext';
 import GithubReducer from './GithubReducer';
@@ -46,7 +46,15 @@ const GithubState = props => {
     }
 
     //get repos
+    const getRepos = async (username) => {
+        setLoading();
+        const res = await axios.get(`https://api.github.com/users/${username}/repos?per_page=6&sort=pushed:desc&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+        dispatch({
+            type: GET_REPOS,
+            payload: res.data
+        });
 
+    }
     //clear users
     const clearUsers = () => dispatch({ type: CLEAR_USERS });
     //set loading
@@ -62,7 +70,8 @@ const GithubState = props => {
         searchUsers,
         clearUsers,
         loadUsers,
-        getUser
+        getUser,
+        getRepos
     }}>
         {props.children}
     </GithubContext.Provider >
